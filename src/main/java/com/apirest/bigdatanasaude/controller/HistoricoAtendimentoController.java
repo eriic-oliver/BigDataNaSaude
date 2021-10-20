@@ -1,7 +1,7 @@
 package com.apirest.bigdatanasaude.controller;
 
 import com.apirest.bigdatanasaude.document.HistoricoAtendimento;
-import com.apirest.bigdatanasaude.service.HistoricoAtendimentoService;
+import com.apirest.bigdatanasaude.service.historicoAtendimento.HistoricoAtendimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

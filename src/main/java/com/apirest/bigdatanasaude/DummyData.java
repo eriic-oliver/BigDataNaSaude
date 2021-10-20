@@ -8,10 +8,10 @@ import reactor.core.publisher.Flux;
 
 import java.util.UUID;
 
-@Component
-public class DummyData implements CommandLineRunner {
+//@Component
+public class DummyData{// implements CommandLineRunner {
 
-    private final UserRepository userRepository;
+  /*  private final UserRepository userRepository;
 
     DummyData(UserRepository userRepository){
         this.userRepository = userRepository;
@@ -26,5 +26,5 @@ public class DummyData implements CommandLineRunner {
                                 .map(nome -> new User(UUID.randomUUID().toString(), nome))
                                 .flatMap(userRepository::save))
                                 .subscribe(System.out::println);
-    }
+    }*/
 }

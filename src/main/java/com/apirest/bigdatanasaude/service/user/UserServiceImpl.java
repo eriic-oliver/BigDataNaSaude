@@ -1,9 +1,8 @@
-package com.apirest.bigdatanasaude.service;
+package com.apirest.bigdatanasaude.service.user;
 
 import com.apirest.bigdatanasaude.document.User;
 import com.apirest.bigdatanasaude.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

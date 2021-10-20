@@ -1,16 +1,11 @@
-package com.apirest.bigdatanasaude.document;
+package com.apirest.bigdatanasaude.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.*;
 
-@Document
-@Getter
-@Setter
-public class User {
-
-    @Id
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO {
     private String id;
     private String nome;
     private String cpf;
@@ -30,5 +25,4 @@ public class User {
     private String contatoEmergencia;
     private String tipoSanguineo;
     private String password;
-
 }

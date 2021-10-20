@@ -1,4 +1,4 @@
-package com.apirest.bigdatanasaude.service;
+package com.apirest.bigdatanasaude.service.historicoAtendimento;
 
 import com.apirest.bigdatanasaude.document.HistoricoAtendimento;
 import reactor.core.publisher.Flux;

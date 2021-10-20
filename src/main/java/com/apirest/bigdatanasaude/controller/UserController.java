@@ -1,9 +1,8 @@
 package com.apirest.bigdatanasaude.controller;
 
 import com.apirest.bigdatanasaude.document.User;
-import com.apirest.bigdatanasaude.model.LoginDTO;
 import com.apirest.bigdatanasaude.repository.UserRepository;
-import com.apirest.bigdatanasaude.service.user.UserService;
+import com.apirest.bigdatanasaude.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Optional;
 
 @RestController
@@ -31,9 +31,6 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    UserAuthenticationService userAuthenticationService;
-
     @GetMapping(value="/")
     @ApiOperation(value="Retorna todos os usuários")
     public Flux<User> getUsers(){
@@ -43,7 +40,8 @@ public class UserController {
     @GetMapping(value = "/{id}")
     @ApiOperation(value="Retorna um usuário por ID")
     public Mono<User> getUser(@PathVariable String id){
-        return userService.findById(id);
+        Mono<User> userMono = userService.findById(id).delayElement(Duration.ofMillis(1000));
+        return userMono;
     }
 
     @PostMapping(value = "/salvar")
@@ -53,20 +51,19 @@ public class UserController {
         return userService.save(user);
     }
 
-    @PostMapping(value = "/validarSenha")
+  /*  @GetMapping(value = "/validarSenha")
     @ApiOperation(value="Valida usuário")
-    public ResponseEntity<String> validarSenha(@RequestBody LoginDTO dadosLoginDTO) throws Exception {
+    public ResponseEntity<Boolean> validarSenha(@RequestParam String login,
+                                                @RequestParam String password){
 
-        Optional<User> optUser = userRepository.findByLogin(dadosLoginDTO.getEmail());
-        if(optUser.isEmpty()){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado");
+        Mono<User> optUser = userRepository.findByLogin(login);
+        if(optUser == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
-        User user = optUser.get();
-        boolean valid = encoder.matches(dadosLoginDTO.getSenha(), user.getPassword());
+        User user = optUser;
+        boolean valid = encoder.matches(password, user.getPassword());
 
         HttpStatus status = valid ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-
-        String token = userAuthenticationService.authenticate(dadosLoginDTO);
-        return ResponseEntity.status(status).body(token);
-    }
+        return ResponseEntity.status(status).body(valid);
+    }*/
 }

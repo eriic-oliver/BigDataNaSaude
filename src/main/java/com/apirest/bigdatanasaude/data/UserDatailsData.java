@@ -1,8 +1,10 @@
 package com.apirest.bigdatanasaude.data;
 
 import com.apirest.bigdatanasaude.document.User;
+import com.apirest.bigdatanasaude.model.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Collection;

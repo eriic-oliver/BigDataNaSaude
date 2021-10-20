@@ -2,8 +2,7 @@ package com.apirest.bigdatanasaude.service;
 
 import com.apirest.bigdatanasaude.data.UserDatailsData;
 import com.apirest.bigdatanasaude.document.User;
-import com.apirest.bigdatanasaude.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.apirest.bigdatanasaude.mapper.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,15 +13,19 @@ import java.util.Optional;
 @Component
 public class ImplementsUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserServiceImpl userService;
+    private final UserMapper userMapper;
+
+    public ImplementsUserDetailsService(UserServiceImpl userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByLogin(login);
-
+        Optional<User> user = userService.findByLogin(login).blockOptional();
         if(user.isEmpty()){
-            throw new UsernameNotFoundException("Usuário não encontrado!");
+            throw new UsernameNotFoundException("Usuário [" + login + "] não encontrado!");
         }
         return new UserDatailsData(user);
     }

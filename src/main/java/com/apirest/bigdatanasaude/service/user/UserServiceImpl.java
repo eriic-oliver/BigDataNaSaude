@@ -1,4 +1,4 @@
-package com.apirest.bigdatanasaude.service;
+package com.apirest.bigdatanasaude.service.user;
 
 import com.apirest.bigdatanasaude.document.User;
 import com.apirest.bigdatanasaude.repository.UserRepository;

@@ -1,0 +1,249 @@
+swagger: "2.0"
+info:
+  description: "API desenvolvida exclusivamente para fins acadêmicos, com o intuito de servir como protótipo do projeto desenvolvido no TCC-II."
+  version: "1.0.0"
+  title: "API - Big Data na Saúde"
+  contact:
+    email: "eriic.oliv@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+paths:
+  /login:
+    post:
+      tags:
+        - "Login"
+      summary: "Obtem token para acessar demais funcionalidades"
+      description: "Obtem token que será utilizado nas demais funcionalidades por meio de autenticação com login e senha."
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request"
+          schema:
+            $ref: "#/definitions/login"
+      responses:
+        "403":
+          description: "Login/Senha inválidos"
+  /api/users/salvar:
+    post:
+      tags:
+        - "Usuários"
+      summary: "Salva um usuário no banco de dados"
+      description: "Método utilizado para persistir um objeto do tipo Usuário no banco de dados"
+      operationId: "postUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto Usuário"
+          schema:
+            $ref: "#/definitions/userSent"
+      responses:
+        "400":
+          description: "Usuário já cadastrado"
+        "405":
+          description: "Campo inválido"
+  /api/users/:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Usuários"
+      summary: "Lista todos usuários"
+      description: "Método utilizado para listar todos os usuários cadastrados"
+      operationId: "getUsers"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: Ok
+          schema:
+            $ref: "#/definitions/usersResponse"
+        "403":
+          description: "Seção expirada"
+        "404":
+          description: "Usuário não encontrado"
+  /api/users/{ID}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Usuários"
+      summary: "Consulta um usuário por ID"
+      description: "Método utilizado para consultar um usuário cadastrado por ID"
+      operationId: "getUser"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "ID"
+          in: "path"
+          description: "ID do usuário"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "Ok"
+          schema:
+            $ref: "#/definitions/user"
+        "403":
+          description: "Seção expirada"
+        "404":
+          description: "Usuário não encontrado"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  login:
+    type: "object"
+    required:
+      - "login"
+      - "senha"
+    properties:
+      login:
+        type: "string"
+        format: "doggie"
+      password:
+        type: "string"
+        format: "doggie"
+    xml:
+      name: "login"
+  usersResponse:
+    type: "array"
+    items:
+      $ref: "#/definitions/user"
+  user:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "doggie"
+      nome:
+        type: "string"
+        format: "doggie"
+      cpf:
+        type: "string"
+        format: "doggie"
+      rg:
+        type: "string"
+        format: "doggie"
+      nomeMae:
+        type: "string"
+        format: "doggie"
+      dtNascimento:
+        type: "string"
+        format: "doggie"
+      altura:
+        type: "integer"
+        format: "int64"
+      peso:
+        type: "integer"
+        format: "int64"
+      endereco:
+        type: "string"
+        format: "doggie"
+      cidade:
+        type: "string"
+        format: "doggie"
+      bairro:
+        type: "string"
+        format: "doggie"
+      complemento:
+        type: "string"
+        format: "doggie"
+      endNumero:
+        type: "integer"
+        format: "int64"
+      telefone:
+        type: "string"
+        format: "doggie"
+      ddd:
+        type: "integer"
+        format: "int64"
+      login:
+        type: "string"
+        format: "doggie"
+      contatoEmergencia:
+        type: "string"
+        format: "doggie"
+      tipoSanguineo:
+        type: "string"
+        format: "doggie"
+      password:
+        type: "string"
+        format: "doggie"
+  userSent:
+    type: "object"
+    required:
+      - "login"
+      - "senha"
+    properties:
+      nome:
+        type: "string"
+        format: "doggie"
+      cpf:
+        type: "string"
+        format: "doggie"
+      rg:
+        type: "string"
+        format: "doggie"
+      nomeMae:
+        type: "string"
+        format: "doggie"
+      dtNascimento:
+        type: "string"
+        format: "doggie"
+      altura:
+        type: "integer"
+        format: "int64"
+      peso:
+        type: "integer"
+        format: "int64"
+      endereco:
+        type: "string"
+        format: "doggie"
+      cidade:
+        type: "string"
+        format: "doggie"
+      bairro:
+        type: "string"
+        format: "doggie"
+      complemento:
+        type: "string"
+        format: "doggie"
+      endNumero:
+        type: "integer"
+        format: "int64"
+      telefone:
+        type: "string"
+        format: "doggie"
+      ddd:
+        type: "integer"
+        format: "int64"
+      login:
+        type: "string"
+        format: "doggie"
+      contatoEmergencia:
+        type: "string"
+        format: "doggie"
+      tipoSanguineo:
+        type: "string"
+        format: "doggie"
+      password:
+        type: "string"
+        format: "doggie"
+    xml:
+      name: "userSent"

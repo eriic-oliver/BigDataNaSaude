@@ -2,27 +2,21 @@ package com.apirest.bigdatanasaude.service;
 
 import com.apirest.bigdatanasaude.data.UserDatailsData;
 import com.apirest.bigdatanasaude.document.User;
-import com.apirest.bigdatanasaude.mapper.UserMapper;
-import com.apirest.bigdatanasaude.model.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.apirest.bigdatanasaude.service.user.UserServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
-import java.time.Duration;
 import java.util.Optional;
 
 @Component
 public class ImplementsUserDetailsService implements UserDetailsService {
 
     private final UserServiceImpl userService;
-    private final UserMapper userMapper;
 
-    public ImplementsUserDetailsService(UserServiceImpl userService, UserMapper userMapper) {
+    public ImplementsUserDetailsService(UserServiceImpl userService) {
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
     @Override

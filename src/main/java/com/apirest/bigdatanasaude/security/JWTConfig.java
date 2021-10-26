@@ -21,13 +21,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class JWTConfig extends WebSecurityConfigurerAdapter {
 
-    /*private static final String[] AUTH_WHITELIST = {
+    private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
             "/webjars/**"
-    };*/
-
+    };
 
     private final ImplementsUserDetailsService implementsUserDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -36,17 +35,18 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
         this.implementsUserDetailsService = implementsUserDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
-/*
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(implementsUserDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
-    }*/
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/salvar").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAutenticarFilter(authenticationManager()))
@@ -63,9 +63,8 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 
-/*
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(AUTH_WHITELIST);
-    }*/
+    }
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.Flow;
+
 @Service
 public class HistoricoAtendimentoImpl implements HistoricoAtendimentoService{
 
@@ -27,4 +29,21 @@ public class HistoricoAtendimentoImpl implements HistoricoAtendimentoService{
     public Mono<HistoricoAtendimento> save(HistoricoAtendimento historicoAtendimento) {
         return historicoAtendimentoRepository.save(historicoAtendimento);
     }
+
+    @Override
+    public Flux<HistoricoAtendimento> findByIdUsuario(String id) {
+        Flux<HistoricoAtendimento> flux = historicoAtendimentoRepository.findAll().filter(his ->
+                his.getIdUsuario().equals(id)
+        );
+        return flux;
+    }
+
+    @Override
+    public Flux<HistoricoAtendimento> findByFilterMedico(String filterMedico) {
+        Flux<HistoricoAtendimento> flux = historicoAtendimentoRepository.findAll().filter(his ->
+                his.getMedico().equals(filterMedico)
+        );
+        return flux;
+    }
+
 }

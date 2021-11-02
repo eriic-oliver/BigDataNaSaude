@@ -11,4 +11,8 @@ public interface HistoricoMedicoService {
     Mono<HistoricoMedico> findById(String id);
 
     Mono<HistoricoMedico> save(HistoricoMedico historicoMedico);
+
+    Flux<HistoricoMedico> findByIdUsuario(String id);
+
+    //Mono<HistoricoMedico> update(String id);
 }

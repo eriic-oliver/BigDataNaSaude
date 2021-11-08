@@ -1,5 +1,6 @@
 package com.apirest.bigdatanasaude.controller;
 
+import com.apirest.bigdatanasaude.document.HistoricoMedico;
 import com.apirest.bigdatanasaude.document.User;
 import com.apirest.bigdatanasaude.model.UserSendDTO;
 import com.apirest.bigdatanasaude.repository.UserRepository;
@@ -48,6 +49,13 @@ public class UserController {
         return userMono;
     }
 
+    @PutMapping(value = "/alterar")
+    @ApiOperation(value = "Altera um usuário", response = User.class, notes = "O endpoint requer token de autenticação. Deve ser passado no body " +
+            "da requisição um objeto JSON contendo os dados do usuário e seu respectivo ID, todos os campos são obrigatórios.")
+    public Mono<User> putHistorico(@RequestBody User user){
+        return userService.save(user);
+    }
+
     @PostMapping(value = "/salvar")
     @ApiOperation(value="Salva um usuário", response = UserSendDTO.class, notes = "O endpoint não requer token de autenticação. Deve ser passado no body " +
             "da requisição um objeto JSON contendo os dados do usuário, todos os campos são obrigatórios. Se o login do usuário passado no body " +
@@ -69,21 +77,4 @@ public class UserController {
 // Bloquear
 
 
-
-
-  /*  @GetMapping(value = "/validarSenha")
-    @ApiOperation(value="Valida usuário")
-    public ResponseEntity<Boolean> validarSenha(@RequestParam String login,
-                                                @RequestParam String password){
-
-        Mono<User> optUser = userRepository.findByLogin(login);
-        if(optUser == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
-        }
-        User user = optUser;
-        boolean valid = encoder.matches(password, user.getPassword());
-
-        HttpStatus status = valid ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-        return ResponseEntity.status(status).body(valid);
-    }*/
 }

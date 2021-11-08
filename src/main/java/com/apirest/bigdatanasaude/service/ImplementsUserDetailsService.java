@@ -22,7 +22,7 @@ public class ImplementsUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Optional<User> user = userService.findByLogin(login).blockOptional();
-        if(user.isEmpty()){
+        if(user.get() == null){
             throw new UsernameNotFoundException("Usuário [" + login + "] não encontrado!");
         }
         return new UserDatailsData(user);

@@ -62,7 +62,7 @@ public class UserController {
             "da requisição corresponder ao login de algum usuário já cadastrado no banco, a aplicação retornará um erro de status 400 - Bad Request.")
     public ResponseEntity postUser(@RequestBody User user){
         Optional<User> jaCadastrado = userService.findByLogin(user.getLogin()).blockOptional();
-        if(!jaCadastrado.isEmpty()){
+        if(jaCadastrado.get() != null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já cadastrado");
         }
         if(!ValidaCPF.isCPF(user.getCpf())){
